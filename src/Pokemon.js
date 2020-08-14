@@ -3,7 +3,7 @@ import React from 'react'
  const Pokemon = (props) => {
      const {match} = props
      const {params} = match
-     const {pokemondId} = params
+     const {pokemonId} = params
 
      return (
          <div>
