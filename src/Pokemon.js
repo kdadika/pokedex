@@ -4,7 +4,7 @@ import { toFirstCharUppercase } from "./constants"
 import axios from "axios"
 
 const Pokemon = (props) => {
-  const { match } = props
+  const { match, history } = props
   const { params } = match
   const { pokemonId } = params
   const [pokemon, setPokemon] = useState(undefined)
@@ -21,10 +21,10 @@ const Pokemon = (props) => {
     })
   }, [pokemonId])
 
-  const generatePokemon = () => {
-    const { name, id, species, height, weight, types, sprites } = pokemon
-    const fullImageUrl = `https://pokeres.bastionbot.org/images/pokemon/${id}.png`
-    const { front_default } = sprites
+  const generatePokemon = (pokemon) => {
+    const { name, id, species, height, weight, types, sprites } = pokemon;
+    const fullImageUrl = `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
+    const { front_default } = sprites;
     return (
       <>
         <Typography variant="h1">
@@ -42,23 +42,23 @@ const Pokemon = (props) => {
         <Typography variant="h6"> Types:</Typography>
         {types.map((typeInfo) => {
           const { type } = typeInfo
-          const { name } = type
+          const { name } = type;
           return <Typography key={name}> {`${name}`}</Typography>
         })}
       </>
-    );
-  };
-
-  return (<> 
-    {pokemon === undefined && <CircularProgress />}
-    {pokemon !== undefined && pokemon && generatePokemon()}
-    {pokemon == false && <Typography> Pokemon not found!</Typography>}
-    {pokemon !== undefined && (
-      <Button variant="contained" onClick={() => window.history.push("/")}>
-      back to pokedex
-    </Button>
-    )}
-  </>
+    )
+  }
+  return (
+    <>
+      {pokemon === undefined && <CircularProgress />}
+      {pokemon !== undefined && pokemon && generatePokemon(pokemon)}
+      {pokemon === false && <Typography> Pokemon not found</Typography>}
+      {pokemon !== undefined && (
+        <Button variant="contained" onClick={() => history.push("/")}>
+          back to pokedex
+        </Button>
+      )}
+    </>
   )
 }
 

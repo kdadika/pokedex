@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   pokedexContainer: {
     paddingTop: "20px",
     paddingLeft: "50px",
-    padddingRight: "500px",
+    paddingRight: "50px",
   },
   cardMedia: {
     margin: "auto",
@@ -27,22 +27,22 @@ const useStyles = makeStyles(theme => ({
   cardContent: {
     textAlign: "center",
   },
-  searchContainer:{
-    display: 'flex',
+  searchContainer: {
+    display: "flex",
     backgroundColor: fade(theme.palette.common.white, 0.15),
     paddingLeft: "20px",
     paddingRight: "20px",
     marginTop: "5px",
-    marginBottom: "5px"
+    marginBottom: "5px",
   },
   searchIcon: {
     alignSelf: "flex-end",
     marginBottom: "5px",
-  }, 
+  },
   searchInput: {
     width: "200px",
-    margin: "5px"
-  }
+    margin: "5px",
+  },
 }))
 
 const Pokedex = (props) => {
@@ -76,7 +76,6 @@ const Pokedex = (props) => {
   }, [])
 
   const getPokemonCard = (pokemonId) => {
-    console.log(pokemonData[`${pokemonId}`]);
     const { id, name, sprite } = pokemonData[pokemonId]
 
     return (
