@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Typography, Link, CircularProgress, Button } from '@material-ui/core';
-import { toFirstCharUppercase } from './constants';
+import { toFirstCharUppercase } from './utils/constants';
 import axios from 'axios';
 
 const Pokemon = (props) => {
-  const { match, history } = props;
+  const { match } = props;
   const { params } = match;
   const { pokemonId } = params;
-  const [pokemon, setPokemon] = useState(undefined);
+  const history = useHistory();
+  const [pokemon, setPokemon] = useState();
 
   useEffect(() => {
     axios
       .get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}/`)
-      .then(function (response) {
+      .then((response) => {
         const { data } = response;
         setPokemon(data);
       })
-      .catch(function (error) {
+      .catch((error) => {
         setPokemon(false);
       });
   }, [pokemonId]);
@@ -25,27 +27,37 @@ const Pokemon = (props) => {
     const { name, id, species, height, weight, types, sprites } = pokemon;
     const fullImageUrl = `https://pokeres.bastionbot.org/images/pokemon/${id}.png`;
     const { front_default } = sprites;
-    const typeJSX = types.map((typeInfo) => {
+
+    const pokemonTypes = types.map((typeInfo) => {
       const { type } = typeInfo;
       const { name } = type;
-      return <Typography key={name}> {`${name}`}</Typography>;
+      return (
+        <Typography key={toFirstCharUppercase(name)}>
+          {' '}
+          {`${toFirstCharUppercase(name)}`}
+        </Typography>
+      );
     });
     return (
       <>
         <Typography variant="h1">
           {`${id}.`} {toFirstCharUppercase(name)}
-          <img src={front_default} />
+          <img src={front_default} alt="pokemon img" />
         </Typography>
-        <img style={{ width: '300px', height: '300px' }} src={fullImageUrl} />
+        <img
+          style={{ width: '300px', height: '300px' }}
+          src={fullImageUrl}
+          alt="pokemon img"
+        />
         <Typography variant="h3">Pokemon Info</Typography>
         <Typography>
           {'Species: '}
-          <Link href={species.url}>{species.name} </Link>
+          <Link href={species.url}>{toFirstCharUppercase(species.name)}</Link>
         </Typography>
-        <Typography>Height: {height} </Typography>
-        <Typography>Weight: {weight} </Typography>
-        <Typography variant="h6"> Types:</Typography>
-        {typeJSX}
+        <Typography>Height: {height}</Typography>
+        <Typography>Weight: {weight}</Typography>
+        <Typography variant="h6">Types:</Typography>
+        {pokemonTypes}
       </>
     );
   };
@@ -53,10 +65,10 @@ const Pokemon = (props) => {
     <>
       {pokemon === undefined && <CircularProgress />}
       {pokemon !== undefined && pokemon && generatePokemon(pokemon)}
-      {pokemon === false && <Typography> Pokemon not found</Typography>}
+      {pokemon === false && <Typography>Pokemon not found</Typography>}
       {pokemon !== undefined && (
         <Button variant="contained" onClick={() => history.push('/')}>
-          back to pokedex
+          Back to Pokedex
         </Button>
       )}
     </>
