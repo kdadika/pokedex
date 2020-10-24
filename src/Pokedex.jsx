@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -6,54 +7,21 @@ import {
   Card,
   CardMedia,
   CardContent,
-  CircularProgress,
   Typography,
   TextField,
 } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import { toFirstCharUppercase } from './constants';
+import { makeStyles } from '@material-ui/core/styles';
+import { toFirstCharUppercase } from './utils/constants';
 import axios from 'axios';
 
-const useStyles = makeStyles((theme) => ({
-  pokedexContainer: {
-    paddingTop: '20px',
-    paddingLeft: '50px',
-    paddingRight: '50px',
-  },
-  cardMedia: {
-    margin: 'auto',
-  },
-  cardContent: {
-    textAlign: 'center',
-  },
-  searchContainer: {
-    display: 'flex',
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    paddingLeft: '20px',
-    paddingRight: '20px',
-    marginTop: '5px',
-    marginBottom: '5px',
-  },
-  searchIcon: {
-    alignSelf: 'flex-end',
-    marginBottom: '5px',
-  },
-  searchInput: {
-    width: '200px',
-    margin: '5px',
-  },
-  genButton: {
-    marginLeft: '10px',
-    marginRight: '10px',
-    paddingTop: '10px',
-    paddingBottom: '10px',
-  },
-}));
+// Styles
+import { PokedexStyles } from './styles/PokedexStyles';
 
-const Pokedex = (props) => {
-  const { history } = props;
+const Pokedex = () => {
+  const history = useHistory();
+  const useStyles = makeStyles(PokedexStyles);
   const classes = useStyles();
   const [pokemonData, setPokemonData] = useState({});
   const [filter, setFilter] = useState(``);
@@ -62,6 +30,7 @@ const Pokedex = (props) => {
     setFilter(e.target.value);
   };
 
+  // TODO: Attach functionality to this handleClick
   const handleClick = (e) => {
     // let id = e.currentTarget.id;
     e.preventDefault();
@@ -71,10 +40,10 @@ const Pokedex = (props) => {
   useEffect(() => {
     axios
       .get(`https://pokeapi.co/api/v2/pokemon?limit=807`)
-      .then(function (response) {
-        const { data } = response;
-        const { results } = data;
+      .then((response) => {
+        const { data: { results } = {} } = response;
         const newPokemonData = {};
+
         results.forEach((pokemon, index) => {
           newPokemonData[index + 1] = {
             id: index + 1,
