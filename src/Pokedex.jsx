@@ -25,19 +25,17 @@ const Pokedex = () => {
   const classes = useStyles();
   const [pokemonData, setPokemonData] = useState({});
   const [filter, setFilter] = useState(``);
+  const [isBtnClicked, setIsBtnClicked] = useState(false);
 
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
   };
 
-  // TODO: Attach functionality to this handleClick
-  const handleClick = (e) => {
-    // let id = e.currentTarget.id;
-    e.preventDefault();
-    console.log(pokemonData);
+  const showPokemon = () => {
+    setIsBtnClicked(!isBtnClicked);
   };
 
-  useEffect(() => {
+  const getPokemonData = () => {
     axios
       .get(`https://pokeapi.co/api/v2/pokemon?limit=807`)
       .then((response) => {
@@ -55,6 +53,10 @@ const Pokedex = () => {
         });
         setPokemonData(newPokemonData);
       });
+  }
+
+  useEffect(() => {
+    getPokemonData();
   }, []);
 
   const getPokemonCard = (pokemonId) => {
@@ -92,7 +94,7 @@ const Pokedex = () => {
 
           <Button
             id="genOne"
-            onClick={handleClick}
+            onClick={showPokemon}
             className={classes.genButton}
             variant="contained"
           >
@@ -104,7 +106,7 @@ const Pokedex = () => {
         </Toolbar>
       </AppBar>
       <Grid container spacing={2} className={classes.pokedexContainer}>
-        {Object.keys(pokemonData).map(
+        {isBtnClicked && Object.keys(pokemonData).map(
           (pokemonId) =>
             pokemonData[pokemonId].name.includes(filter) &&
             getPokemonCard(pokemonId)
