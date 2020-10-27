@@ -10,7 +10,6 @@ import {
   Typography,
   TextField,
 } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
 import { toFirstCharUppercase } from './utils/constants';
@@ -25,19 +24,40 @@ const Pokedex = () => {
   const classes = useStyles();
   const [pokemonData, setPokemonData] = useState({});
   const [filter, setFilter] = useState(``);
-  const [isPokemonShowing, setIsPokemonShowing] = useState(false);
+  const [limit, setLimit] = useState(151);
+  const [offset, setOffset] = useState(0);
 
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
   };
 
-  const togglePokemon = () => {
-    setIsPokemonShowing(!isPokemonShowing);
+  const generations = [
+    {
+      gen: 'genOne',
+      limit: 151,
+      offset: 0,
+    },
+    {
+      gen: 'genTwo',
+      limit: 100,
+      offset: 151
+    }
+  ];
+
+  const handleClick = (e) => {
+    const generation = e.target.id;
+    
+    if (generation) {
+      const clickedGen = generations.find(foundGen => foundGen.gen === generation);
+
+      setLimit(clickedGen.limit);
+      setOffset(clickedGen.offset);
+    }
   };
 
-  const getPokemonData = () => {
+  const getPokemonData = (limit, offset) => {
     axios
-      .get(`https://pokeapi.co/api/v2/pokemon?limit=807`)
+      .get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
       .then((response) => {
         const { data: { results } = {} } = response;
         const newPokemonData = {};
@@ -56,8 +76,8 @@ const Pokedex = () => {
   }
 
   useEffect(() => {
-    getPokemonData();
-  }, []);
+    getPokemonData(limit, offset);
+  }, [limit, offset]);
 
   const getPokemonCard = (pokemonId) => {
     const { id, name, sprite } = pokemonData[pokemonId];
@@ -92,21 +112,26 @@ const Pokedex = () => {
             />
           </div>
 
-          <Button
+          <button
             id="genOne"
-            onClick={togglePokemon}
+            onClick={handleClick}
             className={classes.genButton}
-            variant="contained"
+            // variant="contained"
           >
             Gen One
-          </Button>
-          <Button className={classes.genButton} variant="contained">
+          </button>
+          <button
+            id="genTwo"
+            onClick={handleClick}
+            className={classes.genButton}
+            // variant="contained"
+          >
             Gen Two
-          </Button>
+          </button>
         </Toolbar>
       </AppBar>
       <Grid container spacing={2} className={classes.pokedexContainer}>
-        {isPokemonShowing && Object.keys(pokemonData).map(
+        {Object.keys(pokemonData).map(
           (pokemonId) =>
             pokemonData[pokemonId].name.includes(filter) &&
             getPokemonCard(pokemonId)
