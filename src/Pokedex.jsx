@@ -13,6 +13,7 @@ import {
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
 import { toFirstCharUppercase } from './utils/constants';
+import { generations } from './generations';
 import axios from 'axios';
 
 // Styles
@@ -30,19 +31,6 @@ const Pokedex = () => {
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
   };
-
-  const generations = [
-    {
-      gen: 'genOne',
-      limit: 151,
-      offset: 0,
-    },
-    {
-      gen: 'genTwo',
-      limit: 100,
-      offset: 151
-    }
-  ];
 
   const handleClick = (e) => {
     const generation = e.target.id;
