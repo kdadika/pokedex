@@ -25,14 +25,14 @@ const Pokedex = () => {
   const classes = useStyles();
   const [pokemonData, setPokemonData] = useState({});
   const [filter, setFilter] = useState(``);
-  const [isBtnClicked, setIsBtnClicked] = useState(false);
+  const [isPokemonShowing, setIsPokemonShowing] = useState(false);
 
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
   };
 
-  const showPokemon = () => {
-    setIsBtnClicked(!isBtnClicked);
+  const togglePokemon = () => {
+    setIsPokemonShowing(!isPokemonShowing);
   };
 
   const getPokemonData = () => {
@@ -94,7 +94,7 @@ const Pokedex = () => {
 
           <Button
             id="genOne"
-            onClick={showPokemon}
+            onClick={togglePokemon}
             className={classes.genButton}
             variant="contained"
           >
@@ -106,7 +106,7 @@ const Pokedex = () => {
         </Toolbar>
       </AppBar>
       <Grid container spacing={2} className={classes.pokedexContainer}>
-        {isBtnClicked && Object.keys(pokemonData).map(
+        {isPokemonShowing && Object.keys(pokemonData).map(
           (pokemonId) =>
             pokemonData[pokemonId].name.includes(filter) &&
             getPokemonCard(pokemonId)
