@@ -21,7 +21,7 @@ const Pokemon = (props) => {
 			.catch((error) => {
 			  setPokemon(false);
 			});
-	}, [pokemonId]);
+	}, [pokemonId]); 
 
 	const generatePokemon = (pokemon) => {
 		const { name, id, species, height, weight, types, sprites } = pokemon;

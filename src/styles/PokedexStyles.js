@@ -7,7 +7,7 @@ export const PokedexStyles = (theme) => ({
 		paddingRight: '50px',
 	},
 	cardMedia: {
-		margin: 'auto',
+		margin: 'auto', 
 	},
 	cardContent: {
 		textAlign: 'center',

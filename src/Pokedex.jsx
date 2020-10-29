@@ -7,7 +7,7 @@ import {
 	Card,
 	CardMedia,
 	CardContent,
-	Typography,
+	Typography, 
 	TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';

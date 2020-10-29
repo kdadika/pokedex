@@ -15,7 +15,7 @@ export const generations = [
 		offset: 251,
 	},
 	{
-		gen: 'genFour',
+		gen: 'genFour', 
 		limit: 107,
 		offset: 386,
 	},
