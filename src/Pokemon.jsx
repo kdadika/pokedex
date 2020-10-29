@@ -19,7 +19,7 @@ const Pokemon = (props) => {
 				setPokemon(data);
 			})
 			.catch((error) => {
-				setPokemon(false);
+			  setPokemon(false);
 			});
 	}, [pokemonId]);
 

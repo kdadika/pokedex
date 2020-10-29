@@ -8,7 +8,7 @@ const App = () => (
 		<Route exact path="/" render={(props) => <Pokedex {...props} />} />
 		<Route
 			exact
-			path="/:pokemonId"
+		  path="/:pokemonId"
 			render={(props) => <Pokemon {...props} />}
 		/>
 	</Switch>

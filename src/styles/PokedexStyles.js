@@ -12,7 +12,7 @@ export const PokedexStyles = (theme) => ({
 	cardContent: {
 		textAlign: 'center',
 	},
-	searchContainer: {
+  searchContainer: {
 		display: 'flex',
 		backgroundColor: fade(theme.palette.common.white, 0.15),
 		paddingLeft: '20px',
