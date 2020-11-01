@@ -10,10 +10,10 @@ import {
   Typography,
   TextField,
 } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
 import { toFirstCharUppercase } from './utils/constants';
+import { generations } from './generations';
 import axios from 'axios';
 
 // Styles
@@ -25,37 +25,50 @@ const Pokedex = () => {
   const classes = useStyles();
   const [pokemonData, setPokemonData] = useState({});
   const [filter, setFilter] = useState(``);
+  const [limit, setLimit] = useState(151);
+  const [offset, setOffset] = useState(0);
 
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
   };
 
-  // TODO: Attach functionality to this handleClick
   const handleClick = (e) => {
-    // let id = e.currentTarget.id;
-    e.preventDefault();
-    console.log(pokemonData);
+    const generation = e.target.id;
+
+    if (generation) {
+      const clickedGen = generations.find(
+        (foundGen) => foundGen.gen === generation
+      );
+
+      setLimit(clickedGen.limit);
+      setOffset(clickedGen.offset);
+    }
   };
 
-  useEffect(() => {
+  const getPokemonData = (limit, offset) => {
     axios
-      .get(`https://pokeapi.co/api/v2/pokemon?limit=807`)
+      .get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
       .then((response) => {
         const { data: { results } = {} } = response;
         const newPokemonData = {};
+        const pokemonNumber = offset + 1;
 
         results.forEach((pokemon, index) => {
-          newPokemonData[index + 1] = {
-            id: index + 1,
+          newPokemonData[index + pokemonNumber] = {
+            id: index + pokemonNumber,
             name: pokemon.name,
             sprite: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-              index + 1
+              index + pokemonNumber
             }.png`,
           };
         });
         setPokemonData(newPokemonData);
       });
-  }, []);
+  };
+
+  useEffect(() => {
+    getPokemonData(limit, offset);
+  }, [limit, offset]);
 
   const getPokemonCard = (pokemonId) => {
     const { id, name, sprite } = pokemonData[pokemonId];
@@ -90,17 +103,62 @@ const Pokedex = () => {
             />
           </div>
 
-          <Button
+          <button
             id="genOne"
             onClick={handleClick}
             className={classes.genButton}
-            variant="contained"
           >
             Gen One
-          </Button>
-          <Button className={classes.genButton} variant="contained">
+          </button>
+          <button
+            id="genTwo"
+            onClick={handleClick}
+            className={classes.genButton}
+          >
             Gen Two
-          </Button>
+          </button>
+          <button
+            id="genThree"
+            onClick={handleClick}
+            className={classes.genButton}
+          >
+            Gen Three
+          </button>
+          <button
+            id="genFour"
+            onClick={handleClick}
+            className={classes.genButton}
+          >
+            Gen Four
+          </button>
+          <button
+            id="genFive"
+            onClick={handleClick}
+            className={classes.genButton}
+          >
+            Gen Five
+          </button>
+          <button
+            id="genSix"
+            onClick={handleClick}
+            className={classes.genButton}
+          >
+            Gen Six
+          </button>
+          <button
+            id="genSeven"
+            onClick={handleClick}
+            className={classes.genButton}
+          >
+            Gen Seven
+          </button>
+          <button
+            id="genEight"
+            onClick={handleClick}
+            className={classes.genButton}
+          >
+            Gen Eight
+          </button>
         </Toolbar>
       </AppBar>
       <Grid container spacing={2} className={classes.pokedexContainer}>
