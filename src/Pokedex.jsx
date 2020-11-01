@@ -107,7 +107,6 @@ const Pokedex = () => {
             id="genOne"
             onClick={handleClick}
             className={classes.genButton}
-            // variant="contained"
           >
             Gen One
           </button>
@@ -115,7 +114,6 @@ const Pokedex = () => {
             id="genTwo"
             onClick={handleClick}
             className={classes.genButton}
-            // variant="contained"
           >
             Gen Two
           </button>
@@ -123,7 +121,6 @@ const Pokedex = () => {
             id="genThree"
             onClick={handleClick}
             className={classes.genButton}
-            // variant="contained"
           >
             Gen Three
           </button>
@@ -131,7 +128,6 @@ const Pokedex = () => {
             id="genFour"
             onClick={handleClick}
             className={classes.genButton}
-            // variant="contained"
           >
             Gen Four
           </button>
@@ -139,7 +135,6 @@ const Pokedex = () => {
             id="genFive"
             onClick={handleClick}
             className={classes.genButton}
-            // variant="contained"
           >
             Gen Five
           </button>
@@ -147,7 +142,6 @@ const Pokedex = () => {
             id="genSix"
             onClick={handleClick}
             className={classes.genButton}
-            // variant="contained"
           >
             Gen Six
           </button>
@@ -155,7 +149,6 @@ const Pokedex = () => {
             id="genSeven"
             onClick={handleClick}
             className={classes.genButton}
-            // variant="contained"
           >
             Gen Seven
           </button>
@@ -163,7 +156,6 @@ const Pokedex = () => {
             id="genEight"
             onClick={handleClick}
             className={classes.genButton}
-            // variant="contained"
           >
             Gen Eight
           </button>
