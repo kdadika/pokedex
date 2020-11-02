@@ -11,9 +11,11 @@ import {
   TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles } from '@material-ui/core/styles';
 import { toFirstCharUppercase } from './utils/constants';
 import { generations } from './generations';
+import GetFavorite from '../src/hooks/useLocalStorage';
 import axios from 'axios';
 
 // Styles
@@ -27,6 +29,7 @@ const Pokedex = () => {
   const [filter, setFilter] = useState(``);
   const [limit, setLimit] = useState(151);
   const [offset, setOffset] = useState(0);
+  const [favorite, setFavorite] = GetFavorite(false);
 
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
@@ -43,6 +46,13 @@ const Pokedex = () => {
       setLimit(clickedGen.limit);
       setOffset(clickedGen.offset);
     }
+  };
+
+  const handleToggle = (e) => {
+    setFavorite(({ favoriteValue, ...prevState }) => ({
+      ...prevState,
+      favoriteValue: !favoriteValue,
+    }));
   };
 
   const getPokemonData = (limit, offset) => {
@@ -76,6 +86,7 @@ const Pokedex = () => {
     return (
       <Grid item xs={4} key={pokemonId}>
         <Card onClick={() => history.push(`/${pokemonId}`)}>
+          <FavoriteIcon onClick={handleToggle} id="heart" color="secondary" />
           <CardMedia
             className={classes.cardMedia}
             image={sprite}
