@@ -10,20 +10,14 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { toFirstCharUppercase } from './utils/constants';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import useLocalStorage from './hooks/useLocalStorage';
 
 // Styles
 import { PokedexStyles } from './styles/PokedexStyles';
 
-const PokemonCard = ({id, name, sprite, pokemonId}) => {
+const PokemonCard = ({id, name, sprite, pokemonId, addFavorite}) => {
   const history = useHistory();
   const useStyles = makeStyles(PokedexStyles);
   const classes = useStyles();
-  const [favorite, setFavorite] = useLocalStorage('favorite', false);
-
-  const handleToggle = () => {
-    setFavorite(!favorite);
-  };
 
   return (
     <Grid item xs={4} key={pokemonId}>
@@ -31,9 +25,9 @@ const PokemonCard = ({id, name, sprite, pokemonId}) => {
         // onClick={() => history.push(`/${pokemonId}`)}
       >
         <FavoriteIcon
-          onClick={handleToggle}
+          onClick={() => addFavorite(id)}
           id="heart"
-          color={favorite ? 'secondary' : 'primary'}
+          color="primary"
         />
         <CardMedia
           className={classes.cardMedia}

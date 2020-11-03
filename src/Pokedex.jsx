@@ -11,6 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { generations } from './generations';
 import axios from 'axios';
 import PokemonCard from './PokemonCard';
+import useLocalStorage from './hooks/useLocalStorage';
 
 // Styles
 import { PokedexStyles } from './styles/PokedexStyles';
@@ -23,7 +24,14 @@ const Pokedex = () => {
   const [filter, setFilter] = useState(``);
   const [limit, setLimit] = useState(151);
   const [offset, setOffset] = useState(0);
+  const [favorites, setFavorites] = useState([]);
 
+  const addFavorite = (id) => {
+    if (!favorites.some(alreadyFavorite => alreadyFavorite.id == id)) {
+      setFavorites([...favorites, id]);
+    }
+  };
+  
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
   };
@@ -89,6 +97,8 @@ const Pokedex = () => {
         name={name}
         sprite={sprite}
         pokemonId={pokemonId}
+        favorites={favorites}
+        addFavorite={addFavorite}
       />
     );
   };
