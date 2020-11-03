@@ -4,19 +4,13 @@ import {
   AppBar,
   Toolbar,
   Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
   TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles } from '@material-ui/core/styles';
-import { toFirstCharUppercase } from './utils/constants';
 import { generations } from './generations';
-import UseLocalStorage from '../src/hooks/useLocalStorage';
 import axios from 'axios';
+import PokemonCard from './PokemonCard';
 
 // Styles
 import { PokedexStyles } from './styles/PokedexStyles';
@@ -29,7 +23,6 @@ const Pokedex = () => {
   const [filter, setFilter] = useState(``);
   const [limit, setLimit] = useState(151);
   const [offset, setOffset] = useState(0);
-  const [favorite, setFavorite] = UseLocalStorage(false);
 
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
@@ -62,13 +55,6 @@ const Pokedex = () => {
     }
   };
 
-  const handleToggle = (e) => {
-    setFavorite(({ favoriteValue, ...prevState }) => ({
-      ...prevState,
-      favoriteValue: !favoriteValue,
-    }));
-  };
-
   const getPokemonData = (limit, offset) => {
     axios
       .get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
@@ -98,19 +84,12 @@ const Pokedex = () => {
     const { id, name, sprite } = pokemonData[pokemonId];
 
     return (
-      <Grid item xs={4} key={pokemonId}>
-        <Card onClick={() => history.push(`/${pokemonId}`)}>
-          <FavoriteIcon onClick={handleToggle} id="heart" color="secondary" />
-          <CardMedia
-            className={classes.cardMedia}
-            image={sprite}
-            style={{ width: '130px', height: '130px' }}
-          />
-          <CardContent className={classes.cardContent}>
-            <Typography>{`${id}. ${toFirstCharUppercase(name)}`}</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
+      <PokemonCard
+        id={id}
+        name={name}
+        sprite={sprite}
+        pokemonId={pokemonId}
+      />
     );
   };
 

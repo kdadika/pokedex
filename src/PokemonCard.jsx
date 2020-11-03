@@ -10,7 +10,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { toFirstCharUppercase } from './utils/constants';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import { useLocalStorage } from '../src/hooks/useLocalStorage';
+import useLocalStorage from './hooks/useLocalStorage';
 
 // Styles
 import { PokedexStyles } from './styles/PokedexStyles';
