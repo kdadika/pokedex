@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function GetFavorite(defaultValue) {
+export default function UseLocalStorage(defaultValue) {
   const [value, setValue] = useState(() => {
     const favoriteValue = window.localStorage.getItem(defaultValue);
 

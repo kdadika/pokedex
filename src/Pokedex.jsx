@@ -15,7 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import { makeStyles } from '@material-ui/core/styles';
 import { toFirstCharUppercase } from './utils/constants';
 import { generations } from './generations';
-import GetFavorite from '../src/hooks/useLocalStorage';
+import UseLocalStorage from '../src/hooks/useLocalStorage';
 import axios from 'axios';
 
 // Styles
@@ -29,7 +29,7 @@ const Pokedex = () => {
   const [filter, setFilter] = useState(``);
   const [limit, setLimit] = useState(151);
   const [offset, setOffset] = useState(0);
-  const [favorite, setFavorite] = GetFavorite(false);
+  const [favorite, setFavorite] = UseLocalStorage(false);
 
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
@@ -128,9 +128,7 @@ const Pokedex = () => {
             />
           </div>
 
-          <>
-            {generationButtonHelper()}
-          </>
+          <>{generationButtonHelper()}</>
         </Toolbar>
       </AppBar>
       <Grid container spacing={2} className={classes.pokedexContainer}>
