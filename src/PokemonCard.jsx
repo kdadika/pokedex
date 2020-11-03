@@ -14,7 +14,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 // Styles
 import { PokedexStyles } from './styles/PokedexStyles';
 
-const PokemonCard = ({id, name, sprite, pokemonId, addFavorite}) => {
+const PokemonCard = ({id, name, sprite, pokemonId, isFavorite, addFavorite}) => {
   const history = useHistory();
   const useStyles = makeStyles(PokedexStyles);
   const classes = useStyles();
@@ -22,12 +22,12 @@ const PokemonCard = ({id, name, sprite, pokemonId, addFavorite}) => {
   return (
     <Grid item xs={4} key={pokemonId}>
       <Card
-        // onClick={() => history.push(`/${pokemonId}`)}
+        onClick={() => history.push(`/${pokemonId}`)}
       >
         <FavoriteIcon
-          onClick={() => addFavorite(id)}
+          onClick={(e) => addFavorite(e, id)}
           id="heart"
-          color="primary"
+          color={isFavorite ? "primary" : "secondary"}
         />
         <CardMedia
           className={classes.cardMedia}

@@ -24,12 +24,20 @@ const Pokedex = () => {
   const [filter, setFilter] = useState(``);
   const [limit, setLimit] = useState(151);
   const [offset, setOffset] = useState(0);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useLocalStorage('favorites', []);
 
-  const addFavorite = (id) => {
-    if (!favorites.some(alreadyFavorite => alreadyFavorite.id == id)) {
-      setFavorites([...favorites, id]);
+  const addFavorite = (e, id) => {
+    e.stopPropagation();
+    let newList = [...favorites];
+    let foundId = newList.indexOf(id);
+
+    if (foundId === -1) {
+      newList.push(id);
+    } else {
+      newList.splice(foundId, 1);
     }
+
+    setFavorites(newList);
   };
   
   const handleSearchChange = (e) => {
@@ -90,14 +98,14 @@ const Pokedex = () => {
 
   const getPokemonCard = (pokemonId) => {
     const { id, name, sprite } = pokemonData[pokemonId];
-
+    const isFavorite = favorites.indexOf(id) === -1;
     return (
       <PokemonCard
         id={id}
         name={name}
         sprite={sprite}
         pokemonId={pokemonId}
-        favorites={favorites}
+        isFavorite={isFavorite}
         addFavorite={addFavorite}
       />
     );
@@ -117,7 +125,9 @@ const Pokedex = () => {
             />
           </div>
 
-          <>{generationButtonHelper()}</>
+          <>
+            {generationButtonHelper()}
+          </>
         </Toolbar>
       </AppBar>
       <Grid container spacing={2} className={classes.pokedexContainer}>
