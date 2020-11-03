@@ -35,9 +35,23 @@ const Pokedex = () => {
     setFilter(e.target.value);
   };
 
+  const generationButtonHelper = () => {
+    const genBtns = generations.map((generation) => (
+      <button
+        id={generation.gen}
+        onClick={handleClick}
+        key={generation.gen}
+        className={classes.genButton}
+      >
+        {generation.name}
+      </button>
+    ));
+
+    return genBtns;
+  };
+
   const handleClick = (e) => {
     const generation = e.target.id;
-
     if (generation) {
       const clickedGen = generations.find(
         (foundGen) => foundGen.gen === generation
@@ -114,62 +128,9 @@ const Pokedex = () => {
             />
           </div>
 
-          <button
-            id="genOne"
-            onClick={handleClick}
-            className={classes.genButton}
-          >
-            Gen One
-          </button>
-          <button
-            id="genTwo"
-            onClick={handleClick}
-            className={classes.genButton}
-          >
-            Gen Two
-          </button>
-          <button
-            id="genThree"
-            onClick={handleClick}
-            className={classes.genButton}
-          >
-            Gen Three
-          </button>
-          <button
-            id="genFour"
-            onClick={handleClick}
-            className={classes.genButton}
-          >
-            Gen Four
-          </button>
-          <button
-            id="genFive"
-            onClick={handleClick}
-            className={classes.genButton}
-          >
-            Gen Five
-          </button>
-          <button
-            id="genSix"
-            onClick={handleClick}
-            className={classes.genButton}
-          >
-            Gen Six
-          </button>
-          <button
-            id="genSeven"
-            onClick={handleClick}
-            className={classes.genButton}
-          >
-            Gen Seven
-          </button>
-          <button
-            id="genEight"
-            onClick={handleClick}
-            className={classes.genButton}
-          >
-            Gen Eight
-          </button>
+          <>
+            {generationButtonHelper()}
+          </>
         </Toolbar>
       </AppBar>
       <Grid container spacing={2} className={classes.pokedexContainer}>
