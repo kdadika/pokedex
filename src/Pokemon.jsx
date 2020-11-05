@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Typography, Link, CircularProgress, Button } from '@material-ui/core';
 import { toFirstCharUppercase } from './utils/constants';
 import axios from 'axios';
-
+//Test comment
 const Pokemon = (props) => {
   const { match } = props;
   const { params } = match;
