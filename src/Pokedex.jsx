@@ -103,18 +103,13 @@ const Pokedex = () => {
     const { id, name, sprite } = pokemonData[pokemonId];
 
     return (
-      <Grid item xs={4} key={pokemonId}>
-        <Card onClick={() => history.push(`/${pokemonId}`)}>
-          <CardMedia
-            className={classes.cardMedia}
-            image={sprite}
-            style={{ width: '130px', height: '130px' }}
-          />
-          <CardContent className={classes.cardContent}>
-            <Typography>{`${id}. ${toFirstCharUppercase(name)}`}</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
+      <PokemonCard
+        id={id}
+        name={name}
+        sprite={sprite}
+        isFavorite={isFavorite}
+        addFavorite={addFavorite}
+      />
     );
   };
 
