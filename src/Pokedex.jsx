@@ -4,17 +4,14 @@ import {
   AppBar,
   Toolbar,
   Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
   TextField,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
-import { toFirstCharUppercase } from './utils/constants';
 import { generations } from './generations';
 import axios from 'axios';
+import PokemonCard from './PokemonCard';
+import useLocalStorage from './hooks/useLocalStorage';
 
 // Styles
 import { PokedexStyles } from './styles/PokedexStyles';
@@ -27,7 +24,22 @@ const Pokedex = () => {
   const [filter, setFilter] = useState(``);
   const [limit, setLimit] = useState(151);
   const [offset, setOffset] = useState(0);
+  const [favorites, setFavorites] = useLocalStorage('favorites', []);
 
+  const addFavorite = (e, id) => {
+    e.stopPropagation();
+    let newList = [...favorites];
+    let foundId = newList.indexOf(id);
+
+    if (foundId === -1) {
+      newList.push(id);
+    } else {
+      newList.splice(foundId, 1);
+    }
+
+    setFavorites(newList);
+  };
+  
   const handleSearchChange = (e) => {
     setFilter(e.target.value);
   };
@@ -86,20 +98,16 @@ const Pokedex = () => {
 
   const getPokemonCard = (pokemonId) => {
     const { id, name, sprite } = pokemonData[pokemonId];
-
+    const isFavorite = favorites.indexOf(id) === -1;
     return (
-      <Grid item xs={4} key={pokemonId}>
-        <Card onClick={() => history.push(`/${pokemonId}`)}>
-          <CardMedia
-            className={classes.cardMedia}
-            image={sprite}
-            style={{ width: '130px', height: '130px' }}
-          />
-          <CardContent className={classes.cardContent}>
-            <Typography>{`${id}. ${toFirstCharUppercase(name)}`}</Typography>
-          </CardContent>
-        </Card>
-      </Grid>
+      <PokemonCard
+        id={id}
+        name={name}
+        sprite={sprite}
+        pokemonId={pokemonId}
+        isFavorite={isFavorite}
+        addFavorite={addFavorite}
+      />
     );
   };
 
