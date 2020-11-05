@@ -1,18 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import {
-  AppBar,
-  Toolbar,
-  Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  Typography,
-  TextField,
-} from '@material-ui/core';
+import { AppBar, Toolbar, Grid, TextField } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
-import { toFirstCharUppercase } from './utils/constants';
 import { generations } from './generations';
 import axios from 'axios';
 import useLocalStorage from './hooks/useLocalStorage';
